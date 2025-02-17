@@ -1,0 +1,11 @@
+train: ./data/train/images
+val: ./data/val/images
+
+train_labels: ./data/train/labels
+val_labels: ./data/val/labels
+
+nc: 3
+names: 
+  0: Car
+  1: Pedestrian
+  2: Cyclist
