@@ -1,10 +1,11 @@
 from ultralytics import YOLO
 
+
 model = YOLO("yolov8s.pt")
 
-## Evaluating Base YOLO on Dataset
+## Evaluating Base YOLO on Datasetz
 
-print("Testing pre-trained YOLO model on KITTI...")
+# print("Testing pre-trained YOLO model on KITTI...")
 
 # before_metrics = model.val(data='./data.yaml', batch=8, imgsz=640)
 # print("Before Metrics Eval: ", before_metrics.results_dict)
@@ -20,3 +21,5 @@ print("Testing pre-trained YOLO model on KITTI...")
 
 metrics = model.val(data='./data.yaml', batch=8, imgsz=640)
 print("Retrained Model Eval mAP50: ", metrics.results_dict['metrics/mAP50(B)'])
+
+### Could Add Predictions
