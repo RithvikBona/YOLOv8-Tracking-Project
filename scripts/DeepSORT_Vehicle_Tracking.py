@@ -1,9 +1,13 @@
-from deepsort import nn_matching
-from deepsort.tracker import DeepSortTracker
+import sys
+import os
 from ultralytics import YOLO
 
-'''
-Basically we load the best yolo model
-need to draw bounding boxes i think
-and process video using deepsort tracker
-'''
+# Importing DeepSORT
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, ROOT_DIR)
+
+from deep_sort.tracker import Tracker
+# from deep_sort import DeepSort
+
+video_path = os.path.join('.', 'base_video.mp4')
+
