@@ -1,7 +1,7 @@
 # vim: expandtab:ts=4:sw=4
 from __future__ import absolute_import
 import numpy as np
-from sklearn.utils.linear_assignment_ import linear_assignment
+from scipy.optimize import linear_sum_assignment as linear_assignment
 from . import kalman_filter
 
 
@@ -55,16 +55,25 @@ def min_cost_matching(
     cost_matrix = distance_metric(
         tracks, detections, track_indices, detection_indices)
     cost_matrix[cost_matrix > max_distance] = max_distance + 1e-5
-    indices = linear_assignment(cost_matrix)
+    indices = np.array(linear_assignment(cost_matrix))
 
     matches, unmatched_tracks, unmatched_detections = [], [], []
+    print("First For Loop: \n")
     for col, detection_idx in enumerate(detection_indices):
-        if col not in indices[:, 1]:
+        print("DETECTION IDX:", detection_idx)
+        print("INDEX", indices)
+        print("COL", col)
+        print(indices[0])
+        if col not in indices[1]:
             unmatched_detections.append(detection_idx)
+    print("Second For Loop: \n")
     for row, track_idx in enumerate(track_indices):
-        if row not in indices[:, 0]:
+        print("track index", track_idx, "row", row)
+        if row not in indices[0]:
             unmatched_tracks.append(track_idx)
-    for row, col in indices:
+    print("Third For Loop: \n")
+    print(indices)
+    for row, col in zip(indices[0], indices[1]):
         track_idx = track_indices[row]
         detection_idx = detection_indices[col]
         if cost_matrix[row, col] > max_distance:
