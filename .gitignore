@@ -1,5 +1,6 @@
 data/
 runs/
-venv/
+venv*/
 *.pt
 *__pycache__
+*.mp4

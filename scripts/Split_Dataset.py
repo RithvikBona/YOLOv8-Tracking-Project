@@ -3,8 +3,7 @@ import random
 import shutil
 import argparse
 
-def main(train_ratio):
-    data_path = "data/"
+def main(train_ratio, data_path):
 
     ## Define folder paths
     unsplit_img_path = os.path.join(data_path, 'images')
@@ -41,12 +40,20 @@ def main(train_ratio):
         label_filename = f[:-3] + 'txt'
         shutil.copy(os.path.join(unsplit_label_path, label_filename), os.path.join(dest_folder, 'labels/' + label_filename))
 
+def validate_file(f):
+    if not os.path.exists(f):
+        raise argparse.ArgumentTypeError("{0} does not exist".format(f))
+    return f
+
 def parse_args():
   parser = argparse.ArgumentParser(description="Dataset divider")
-  parser.add_argument("--train_ratio", required=True,
+  parser.add_argument("--train_ratio", required=False, default=0.7,
     help="Train ratio - Ex 0.7 means splitting data in 70% train and 30% validation")
+  parser.add_argument("-d", "--data_dir", required=True, 
+    type=validate_file, metavar="FILE",
+    help="Data Directory Containing Images and Labels")
   return parser.parse_args()
 
 if __name__ == "__main__":
   args = parse_args()
-  main(float(args.train_ratio))
+  main(float(args.train_ratio), args.data_dir)
